@@ -20,8 +20,13 @@ app.route('/api/whoami').get((req, res) => {
   const os = regExp.exec(info.string)[0];
   // get language in Accept-Language field in HTTP request
   const language = req.get('Accept-Language').split(",")[0];
+  // get ip address
+  let ip = req.ip;
+  if(ip.substr(0, 7) == "::ffff:") {
+    ip = ip.substr(7);
+  }
   var result = {
-    "ip": req.ip,
+    "ipAddress": ip,
     "language": language,
     // remove ()
     "software": os.slice(1, os.length - 1)
